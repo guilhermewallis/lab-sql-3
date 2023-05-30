@@ -5,7 +5,7 @@ select count(distinct last_name) from actor;
 select count(distinct language_id) from film;
 
 -- 3. How many movies were released with "PG-13" rating?
-select rating from film
+select count(*) from film
 where rating = 'PG-13';
 
 -- 4. Get the 10 longest movies from 2006
@@ -15,7 +15,8 @@ order by length desc
 limit 10;
 
 -- 5. How many days has been the company operating?
-select datediff('2023-05-23', '2006-01-01');
+select datediff(curdate(), rental_date) as days_op from rental
+where rental_date = (select min(rental_date) from rental);
 
 -- 6. Show rental info with additional columns month and weekday. Get 20
 select *, date_format(rental_date, '%M') as month, date_format(rental_date, '%W') as weekday from rental
